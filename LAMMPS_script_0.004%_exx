@@ -1,0 +1,53 @@
+# Example of how a LAMMPS script looked like for running a simulation in a deformed state (namely -0.004%) in the x direction for model I MARTINI 2.0 of mapping A.
+# As it can be seen further on the script, the deformation will be made via the change_box command by altering by -0.004% the length of the simulation box in the x direction.
+# The % change is taken from the equilibrium cell dimensions at T = 300K, p = 0.0 GPa.
+
+units		real
+atom_style	full
+boundary        p p p
+
+read_restart restart.equil
+
+group  bead type 1
+
+mass		1 227.6
+
+timestep	20
+
+pair_style      lj/gromacs 9.0 12.0
+pair_coeff	1 1 0.835961   4.7
+special_bonds   lj 1.0e-50 1.0 1.0
+
+bond_style      harmonic
+bond_coeff      1 29.44 6.09
+
+angle_style	cosine/squared
+angle_coeff	1 39.2445 89.5
+angle_coeff	2 44.769 119.5
+
+neighbor        0.5 bin 
+neigh_modify    delay 0 every 1 check yes
+
+thermo_style    custom step temp pe etotal pxx pyy pzz pxy pxz pyz lx ly lz xlo xhi ylo yhi zlo zhi xy xz yz vol press
+thermo          10
+
+# A first change_box command will be used to fix the dimensions of the a box in the average values of lx, ly, lz xy, xz and yz corresponding to the equilibrium ones at the thermodynamic state of T = 300K, P = 0.0 GPa. Such dimensions were found from running a previous MD simulation in the NPT ensemble using this given classical model. 
+change_box	all x final -0.08758 85.95907 y final -0.05818 85.98818 z final -0.07124 85.97471 xy final 5.84E-05 xz final -2.56E-04 yz final -5.81E-04 remap units box
+
+fix              1 all nvt temp 300 300 $(100*dt)
+run              1500000
+unfix            1
+
+variable tmp equal lx
+variable lx0 equal ${tmp}
+
+# Deform the box by 0.004% the equilibrium length in x and run more steps to get statistics for calculating average values of sigma_ij.
+variable delta equal (-0.004)*${lx0}
+
+change_box	 all x delta 0 ${delta} remap units box
+
+fix              1 all nvt temp 300 300 $(100*dt)
+run              1500000
+unfix            1
+
+write_data       final_pos.dat
