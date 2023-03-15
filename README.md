@@ -8,3 +8,5 @@ mechanical_eq.in : input script used to equilibrate the system in the thermodyna
 mechanical_exx.in : input script used to run the simulation in a random deformed state (particularly here the one corresponding to the deformation of 0.2% exx). Same philosophy was used for the other % deformations.
 
 mechanical_exy.in : input script used to run the simulation in a random deformed state (particularly here the one corresponding to the deformation of 0.2% exy). Same philosophy was used for the other % deformations.
+
+thermal_expa.in : input script used to run the simulation at 1 atm and 272.5K. The same philosophy is used for the 300K temperature.
