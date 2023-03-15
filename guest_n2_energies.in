@@ -73,7 +73,7 @@ neigh_modify	exclude molecule/intra guest
 # These computes to calculate the pairwise energies between superatoms within the corresponding group.
 # They will be further output using the thermo_style command.
 # Naturally I used a post-processing python script to get the data I mentioned in the paper from these energies LAMMPS is outputting me (see python script 
-# guest_n2_energies.in to see details about such post-processing).
+# guest_n2_energies.py to see details about such post-processing).
 
 group		 type_one type 1
 compute 	 1 type_one pair/local eng force
