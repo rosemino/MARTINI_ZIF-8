@@ -165,7 +165,7 @@ reset_timestep 0
 compute         myRDF all rdf 200 1 1 1 2 1 3 1 4 1 5 2 2 2 3 2 4 2 5 3 3 3 4 3 5 4 4 4 5 5 5 #  cutoff ${sizeLxsur2}
 fix             myRDF1 all ave/time 10 2500 250000  c_myRDF[*] file rdf.dat mode vector
 
-# This command was used to save microstates which were further used to derive the corresponding swing angle histograms.
+# This command was used to save microstates which were further used to derive the corresponding swing angle histograms (post-processing python script not shown here).
 # Note: whenever the system turned out to do not hve equilibrated after the 4000000 time steps above, the file equilibrated_pos.dat were used to run more
 # timesteps, up to when equilibration is reached. This dump.pos file is dismissed and a new dump.pos file, saved in the new simulation, is used.
 dump		 2 MOF atom 500 dump.pos
