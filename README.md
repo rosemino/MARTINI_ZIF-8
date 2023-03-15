@@ -9,4 +9,11 @@ mechanical_exx.in : input script used to run the simulation in a random deformed
 
 mechanical_exy.in : input script used to run the simulation in a random deformed state (particularly here the one corresponding to the deformation of 0.2% exy). Same philosophy was used for the other % deformations.
 
-thermal_expa.in : input script used to run the simulation at 1 atm and 272.5K. The same philosophy is used for the 300K temperature.
+amorphization.in : input script used to run a 200ns long simulation for the sake of evaluating if the model reproduces the amorphization.
+
+thermal_expa.in : input script used to run the simulation at 1 atm and 272.5K and get the resulting equilibrium volume once the system has equilibrated. The same philosophy is used for the 300K temperature to then estimate the volume expansion coefficient.
+
+guest_n2.in : input script used to run the simulation of ZIF-8 with 51 N2 molecules at the corresponding pressure and temperature. Same philosophy was used for MeOH.
+
+guest_n2_energies.in : input script used to assess the LJ interaction between superatoms of the MOF and N2 molecules. The philosophy of this script is the same as the one in the guest_n2.in script and in fact, only one simulation could have been run for everything. I ran separately because ideas did not come in order. This simulation uses the equilibrated_pos.dat script coming from the guest_n2.in simulation of the respective model. A post processing python code was used to ultimately get data with the meaning given in the official publication. Such python code is also presented here for what is worth (see guest_n2_energies.py).
+
