@@ -1,5 +1,5 @@
 In this folder you can find samples of LAMMPS input scripts we used to our differently-purposed classical MD simulations to derive the results found in the publication of DOI XXX.
-Below you can find a list linking the name of an input file to what it was used for within our work. All of the input files presented are for model I of MARTINI 3 for mapping C. In the input file you can find short comments on the functionality of specific commands (or set of commands).
+Below you can find a list linking the name of an input file to what it was used for within our work. All of the input files presented are for model I of MARTINI 3 for mapping C. Naturally, the scripts to run simulations for the other models follow the same philosophy (only potential parameters and ofc initial microstate changes). In each input file you can find short comments on the functionality of specific commands (or set of commands).
 
 structure.in : input script used to derive data for determining BDF, ADF, RDF data in the coarse grained level.
 
