@@ -1,0 +1,76 @@
+# Script structure.in (model I, MARTINI 3.0, mapping C)
+# This concerns the deformation of 0.2%.
+
+units		real
+atom_style	full
+boundary        p p p
+
+read_restart restart.equil
+
+group  ZnN4 type 1
+group  HCCH type 2
+group  CCH3 type 3
+
+mass		1 121.42 #72amu
+mass		2 26.04 #72amu
+mass		3 27.05 #72amu
+
+timestep	20
+
+pair_style      lj/gromacs/coul/gromacs 9.0 11.0 0.0 11.0
+pair_coeff	1 1 1.3017   4.7
+pair_coeff	1 2 0.99121   4.05
+pair_coeff	1 3 0.99121   4.05
+pair_coeff	2 2 0.125394   3.83
+pair_coeff	2 3 0.125394   3.83
+pair_coeff	3 3 0.125394   3.83
+special_bonds   lj 1.0e-50 1.0 1.0 coul 1.0e-50 1.0 1.0
+
+dielectric	15
+set		type 1 charge -0.974
+set		type 2 charge 0.0958
+set		type 3 charge 0.3912
+
+bond_style      harmonic
+bond_coeff      1 32.586 3.81
+bond_coeff      2 4.21575 3.51 
+bond_coeff	3 109.7 3.99
+
+angle_style	cosine/squared
+angle_coeff	1 43.99 107.5
+angle_coeff	2 26.91 119.5
+angle_coeff	3 15.85 99.5
+angle_coeff	4 15.12 132.5
+angle_coeff	5 9.8595 79.5
+angle_coeff	6 12.095 125.5
+angle_coeff	7 210.81 66.5
+angle_coeff	8 19.675 151.5
+
+neighbor        0.5 bin 
+neigh_modify    delay 0 every 1 check yes
+
+thermo_style    custom step temp pe etotal pxx pyy pzz pxy pxz pyz lx ly lz xlo xhi ylo yhi zlo zhi xy xz yz vol press
+thermo          10
+
+# A first change_box command will be used to create a box with the equilibrium values of lx, ly, lz xy, xz and yz corresponding to this thermodynamic state in the eyes
+# of this classical model. These are the average values found in the log.lammps file in the simulation mechanical_eq.in after the system has equilibrated.
+change_box	all x final 0.84703 50.67586 y final 0.85944 50.69856 z final 0.85361 50.68848 xy final 0 xz final 0.03679 yz final -0.01148 remap units box
+
+# Equilibration:
+fix              1 all nvt temp 300 300 $(100*dt)
+run              1500000
+unfix            1
+
+# This sequence of commands are for the sake of deforming the simulation box.
+variable tmp equal ly
+variable ly0 equal ${tmp}
+variable delta equal (0.002)*${ly0}
+change_box	 all xy delta ${delta} remap units box
+
+# Equilibration and production: 
+# (data will be collected only in a time range in which the system has been equilibrated)
+fix              1 all nvt temp 300 300 $(100*dt)
+run              4000000
+unfix            1
+
+write_data       final_pos.dat
