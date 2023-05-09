@@ -59,11 +59,7 @@ inte_3n2 = inte_34 + inte_35
 # Total enregy is also defined.
 inte_total = inte_1n2 + inte_2n2 + inte_3n2
 
-# Unit conversion (kcal/mol to eV):
-inte_1n2 = (inte_1n2/6.02E23)*2.61144742E22
-inte_2n2 = (inte_2n2/6.02E23)*2.61144742E22
-inte_3n2 = (inte_3n2/6.02E23)*2.61144742E22
-inte_total = (inte_total/6.02E23)*2.61144742E22
-
 output = np.array([[inte_total, inte_1n2, inte_2n2, inte_3n2]])
 ending = np.savetxt('energies.txt', (output))
+
+# Further process and normalization of output values of the code is made afterwards by the authors in order to present the values in the paper.
