@@ -14,8 +14,8 @@ group  CCH3 type 3
 group  MOF type 1 2 3
 group  guest type 4 5
 
-# NOTE: in doubt of which mass would be most appropriate for the dummy atom in context of MD, no difference at all was observed in assigning it a mass of 1e-100 for 
-# what concerns final structure (assessed by means on swing angle histogram and RDFs of all pairs) nor (Ep,V).
+# NOTE: no difference at all was observed in assigning it a mass of 1e-100 for the dummy atom versus the value of 1.0 (obtained by taking 0.5 of each N atom)
+# what concerns final structure (including both swing angle histogram and RDFs of all pairs) nor average potential energy or volume (naturally).
 mass		1 121.42 #72amu
 mass		2 26.04 #72amu
 mass		3 27.05 #72amu
